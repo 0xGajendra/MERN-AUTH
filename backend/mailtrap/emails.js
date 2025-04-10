@@ -45,3 +45,5 @@ export const sendWelcomeEmail = async (email, name) => {
     throw new Error(`Error sending welcome email: ${error}`);
   }
 };
+
+
