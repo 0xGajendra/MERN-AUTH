@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import crypto from "crypto"
-import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js";
+import { sendPasswordResetEmail, sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js";
 export const signup = async (req, res) => {
     const {email, name, password} = req.body;
     try {
@@ -152,9 +152,22 @@ export const forgotPassword = async (req, res) => {
 
         //Generate reset token
         const resetToken = crypto.randomBytes(20).toString("hex");
-        const resetTokenExpireAt = Date.now + 1*60*60*1000; //1 hour
+        const resetTokenExpireAt = Date.now() + 1*60*60*1000; //1 hour
+
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpiresAt = resetTokenExpireAt;
+
+        await user.save();
+
+        //send email
+        await sendPasswordResetEmail(user.email,`${process.env.CLIENT_URL}/reset-password/${resetToken}`);
+
+        res.status(200).json({ success: true, message: "Password reset link sent to your email"});
+
         
     } catch (error) {
+        console.log("Error in forgotPassword", error);
+        res.status(400).json({success: false, message: error.message});
         
     }
 }
