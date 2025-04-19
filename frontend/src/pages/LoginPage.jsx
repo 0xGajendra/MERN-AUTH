@@ -10,6 +10,8 @@ const LoginPage = () => {
   const handleLogin = (e) => {
     e.preventDefault();
   };
+  console.log("login page");
+  
 
   return (
     <motion.div
