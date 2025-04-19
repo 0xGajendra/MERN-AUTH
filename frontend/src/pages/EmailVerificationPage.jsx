@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { motion } from "motion/react";
+import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 const EmailVerificationPage = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRef = useRef([]);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false)
+
+  const {error, isLoading, verifyEmail} = useAuthStore();
 
   const handleChange = (index, value) => {
     const newCode = [...code];
@@ -44,10 +47,21 @@ const EmailVerificationPage = () => {
     }
   },[code])
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = async (e) =>{
     e.preventDefault();
     const verificationCode = code.join("");
-    alert(`Verification code submitted: ${verificationCode}`)
+    try {
+      console.log(verificationCode);
+      
+      verifyEmail(verificationCode)
+      .then((e)=> {console.log(e);
+      })
+      
+      navigate("/");
+      toast.success("Email verified succesfully")
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -79,6 +93,8 @@ const EmailVerificationPage = () => {
                         />
                 ))}
             </div>
+            {error && <p className="text-red-500 font-semibold mt-2">{error}</p>}
+
             <motion.button
             className="mt-5 w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white 
                         font-bold rounded-lg shadow-lg hover:from-green-600

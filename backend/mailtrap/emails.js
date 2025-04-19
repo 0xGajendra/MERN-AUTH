@@ -3,6 +3,7 @@ import { mailtrapClient, sender } from "./mailtrap.config.js";
 
 export const sendVerificationEmail = async (email, verificationToken) => {
   const recipient = [{ email }];
+  
 
   try {
     const response = await mailtrapClient.send({
@@ -20,7 +21,7 @@ export const sendVerificationEmail = async (email, verificationToken) => {
   } catch (error) {
     console.error("Error sending the Verification Email", error);
 
-    throw new Error(`Error sending verification email: ${error}`);
+    // throw new Error(`Error sending verification email: ${error}`);
   }
 };
 

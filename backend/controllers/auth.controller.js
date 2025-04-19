@@ -59,6 +59,8 @@ export const signup = async (req, res) => {
 
 export const verifyEmail = async (req, res) => {
     const {code} = req.body;
+    console.log("codew",code);
+    
     try {
         const user = await User.findOne({
             verificationToken: code,
@@ -68,7 +70,7 @@ export const verifyEmail = async (req, res) => {
         
 
         if(!user){
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "Invalid or Expired varification code "
             })
