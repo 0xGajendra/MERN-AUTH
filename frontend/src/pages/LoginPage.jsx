@@ -11,9 +11,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     await login(email, password);
-
   };
-  console.log("login page");
   
 
   return (
