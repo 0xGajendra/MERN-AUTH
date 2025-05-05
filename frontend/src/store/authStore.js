@@ -1,7 +1,8 @@
 import {create, } from "zustand";
 import axios from "axios"
+import dotenv from 'dotenv'
 
-const API_URL = "http://localhost:3000/api/auth";
+const API_URL = import.meta.env.VITE_API_URL;
 
 //axios will put cookies in the request by default
 axios.defaults.withCredentials = true
