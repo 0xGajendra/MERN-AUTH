@@ -70,14 +70,14 @@ cd mern-auth
 
 2. **Install and run the frontend**
 ```
-cd client
+cd frontend
 npm install
 npm run dev
 ```
 
 3. **Install and run the backend**
 ```
-cd server
+cd backend
 npm install
 npm run dev
 ```
