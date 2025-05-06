@@ -1,7 +1,3 @@
-README.md
-md
-Copy
-Edit
 # MERN Stack Authentication Boilerplate
 
 This is a full-stack authentication starter built using the MERN stack (MongoDB, Express.js, React, Node.js). It includes essential user auth features like signup, login, logout, email verification, and password reset, all integrated with Mailtrap for email testing.
